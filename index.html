@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <title>Jogo Mats- Quiz de matemática</title>
+        <!-- Importando o CSS externo -->
+         <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Quiz de matemática</h1>
+            <div class="question" id="question">Pergunta aqui</div>
+            <input type="number" id="answer" placeholder="Digite sua resposta">
+            <br>
+            <button onclick="checkAnswer()">Responder</button>
+            <div class="feedback" id="feedback"></div>
+            <div class="score" id="score">Pontuação: 0</div>
+        </div>
+
+        <script>
+            let num1, num2, correctAnswer;
+            let score = 0;
+
+            function generateQuestion() {
+                num1 = Math.floor(Math.random() * 10)+1;
+                num2 = Math.floor(Math.random() * 10)+1;
+                const operation = Math.random() > 0.5?'+':'x';
+                correctAnswer = operation === '+'? num1 + num2 : num1 * num2;
+                document.getElementById("question").textContent = `Quanto é ${num1}${operation}${num2}?`;
+                document.getElementById("answer").value="";
+                document.getElementById("feedback").textContent="";
+            }
+            function checkAnswer(){
+                const userAnswer = 
+                parseInt(document.getElementById("answer").value);
+                if (userAnswer ===correctAnswer) {
+                    score++;
+                    document.getElementById("feedback").textContent = "CORRETO!";
+                    document.getElementById("feedback").style.color = "#22c55e";
+                } else {
+                    document.getElementById("feedback").textContent = `ERRADO! A resposta era ${correctAnswer}`;
+                    document.getElementById("feedback").style.color = "#ef4444";
+                }
+                document.getElementById("score").textContent = `Pontuação: ${score}`;
+                setTimeout(generateQuestion, 1200);
+            }
+
+            // inicia o jogo
+            generateQuestion();
+        </script>
+    </body>
+</html>
